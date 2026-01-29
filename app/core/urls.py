@@ -16,7 +16,7 @@ Para apps separados, use include() para modularizar as rotas:
   path('api/', include('meu_app.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from django.http import JsonResponse
 
 
@@ -30,5 +30,7 @@ def health_check(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),  # Painel administrativo do Django
-    path('', health_check, name='health_check'),  # Endpoint raiz para health check
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("", include("chat.urls")),
+    path('health/', health_check, name='health_check'),  # Endpoint para health check
 ]
